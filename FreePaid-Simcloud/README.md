@@ -72,4 +72,4 @@ orderno (string): Order number (returned from placeOrder)
 ---
 
 📝 License
-MIT © [Your Name]
+MIT © [CreareGuru - www.creare.guru]
