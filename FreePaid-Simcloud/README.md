@@ -10,6 +10,9 @@ This custom set of workflows for [n8n](https://n8n.io) provides integration with
   - `fetchProducts`: Get available products (e.g., airtime bundles)
   - `placeOrder`: Place an airtime/data order (pinless)
   - `queryOrder`: Query the status of an existing order
+ 
+![image](https://github.com/user-attachments/assets/74b2d389-fe42-4bdc-b8e2-a1435f38fd75)
+
 
 ---
 
