@@ -13,6 +13,7 @@ This custom set of workflows for [n8n](https://n8n.io) provides integration with
  
 ![image](https://github.com/user-attachments/assets/74b2d389-fe42-4bdc-b8e2-a1435f38fd75)
 
+ - Note: Use https://ws.freepaid.co.za/airtimeplus/ instead of https://ws.test.freepaid.co.za/airtimeplus/
 
 ---
 
@@ -71,6 +72,14 @@ Purpose: Get status of a previously placed order.
 #### Parameters:
 
 orderno (string): Order number (returned from placeOrder)
+
+---
+
+#### Links
+
+[ws.freepaid.test.co.za/airtimeplus](https://ws.test.freepaid.co.za/airtimeplus/#)
+
+[Freepaid PHP examples & Error Codes](https://ws.test.freepaid.co.za:443/airtimeplus/sample.html)
 
 ---
 
