@@ -1,0 +1,525 @@
+{
+  "name": "SimCloud | Freepaid Workflows",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## fetchBalance",
+        "height": 360,
+        "width": 580
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1680,
+        -140
+      ],
+      "typeVersion": 1,
+      "id": "9df63f60-50df-4a5b-a80f-68a3a8fcdc09",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Credentials\n",
+        "height": 340,
+        "width": 280
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        860,
+        -120
+      ],
+      "typeVersion": 1,
+      "id": "39757f73-eae5-41f9-b660-a2aa9fbe7b10",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        480,
+        0
+      ],
+      "id": "be8bbb8e-faf5-49e4-8f60-89441ab5b7b1",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "content": "## fetchProducts\n",
+        "height": 320,
+        "width": 780
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1680,
+        260
+      ],
+      "typeVersion": 1,
+      "id": "ecabbd0b-5f60-448e-b3f0-b966fe2140e1",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c985e7b8-566a-472e-b757-a240a8065856",
+              "name": "User_ID",
+              "value": "USERXXXX",
+              "type": "string"
+            },
+            {
+              "id": "af372ffa-9034-412f-b4d7-d2e3b2a5b532",
+              "name": "Password",
+              "value": "PASSXXXX",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        940,
+        0
+      ],
+      "id": "f9acf31f-bd96-40dd-80ae-4f217043164d",
+      "name": "Freepaid Credentials"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ws.freepaid.co.za:443/airtimeplus/",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "{\n  \"Content-Type\": \"text/xml; charset=utf-8\",\n  \"SOAPAction\": \"https://ws.freepaid.co.za:443/airtimeplus/fetchBalance\"\n}",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "text/xml",
+        "body": "=<?xml version=\"1.0\" encoding=\"utf-8\"?> <soapenv:Envelope    xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"   xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"   xmlns:air=\"https://ws.freepaid.co.za:443/airtimeplus/\">   <soapenv:Body>     <air:fetchBalance>       <request xsi:type=\"air:fetchBalanceIn\">         <user xsi:type=\"xsd:string\">{{ $json.User_ID }}</user>         <pass xsi:type=\"xsd:string\">{{ $json.Password }}</pass>       </request>     </air:fetchBalance>   </soapenv:Body> </soapenv:Envelope> ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1820,
+        -40
+      ],
+      "id": "6388fc32-5645-4e31-bb12-d15b27b8f48f",
+      "name": "fetchBalance SOAP Request"
+    },
+    {
+      "parameters": {
+        "dataPropertyName": "=data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.xml",
+      "typeVersion": 1,
+      "position": [
+        2040,
+        -40
+      ],
+      "id": "a1c96af6-94d7-4975-a785-23aedd81c271",
+      "name": "JSON Output"
+    },
+    {
+      "parameters": {
+        "dataPropertyName": "=data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.xml",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        360
+      ],
+      "id": "f8437e14-03c8-471f-b55b-509598f09a17",
+      "name": "JSON Output1"
+    },
+    {
+      "parameters": {
+        "content": "## placeOrder - Pinless",
+        "height": 320,
+        "width": 780
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1680,
+        620
+      ],
+      "typeVersion": 1,
+      "id": "976f633f-c61b-488d-bee3-cb97e43f754b",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "58785712-1808-4c7a-8530-561289519ce7",
+              "name": "user",
+              "value": "={{ $json.User_ID }}",
+              "type": "number"
+            },
+            {
+              "id": "3244b4d8-f3eb-4b6f-a58b-db64ae1200cc",
+              "name": "pass",
+              "value": "={{ $json.Password }}",
+              "type": "string"
+            },
+            {
+              "id": "418288dc-ca4d-4833-a26b-65d9f2bc4a81",
+              "name": "refno",
+              "value": "TESTXXXX",
+              "type": "string"
+            },
+            {
+              "id": "317c7731-f14b-4710-93f0-52514b67cd18",
+              "name": "network",
+              "value": "p-vodacom",
+              "type": "string"
+            },
+            {
+              "id": "89aadff8-6f80-4575-886f-ec44c798a522",
+              "name": "sellvalue",
+              "value": "2",
+              "type": "string"
+            },
+            {
+              "id": "2cf53654-676e-4707-9f41-24efdb919bc1",
+              "name": "count",
+              "value": 1,
+              "type": "number"
+            },
+            {
+              "id": "e6fc4c2b-54fe-4c1f-9962-f703afa5237a",
+              "name": "extra",
+              "value": "0823895370",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1740,
+        720
+      ],
+      "id": "5ccd8e90-0995-4b00-85a8-65d233ca6847",
+      "name": "placeOrder INPUTS1"
+    },
+    {
+      "parameters": {
+        "dataPropertyName": "=data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.xml",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        720
+      ],
+      "id": "f309dfef-07fe-4d4d-932b-ed65b8f85a9a",
+      "name": "JSON Output2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "58785712-1808-4c7a-8530-561289519ce7",
+              "name": "user",
+              "value": "={{ $json.User_ID }}",
+              "type": "number"
+            },
+            {
+              "id": "3244b4d8-f3eb-4b6f-a58b-db64ae1200cc",
+              "name": "pass",
+              "value": "={{ $json.Password }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1740,
+        360
+      ],
+      "id": "93da5b0a-f21f-4085-b396-f354ef34c5ca",
+      "name": "fetchProducts INPUTS"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ws.freepaid.co.za:443/airtimeplus/",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "{\n  \"Content-Type\": \"text/xml; charset=utf-8\",\n  \"SOAPAction\": \"https://ws.freepaid.co.za:443/airtimeplus/fetchProducts\"\n}",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "text/xml",
+        "body": "=<?xml version=\"1.0\" encoding=\"utf-8\"?> <soapenv:Envelope    xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"   xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"   xmlns:air=\"https://ws.freepaid.co.za:443/airtimeplus/\">   \n<soapenv:Body>     \n<air:fetchProducts>       \n<request xsi:type=\"air:fetchProductsIn\">         \n<user xsi:type=\"xsd:string\">{{ $json.user }}</user>         \n<pass xsi:type=\"xsd:string\">{{ $json.pass }}</pass>       \n</request>     </air:fetchProducts>   </soapenv:Body> </soapenv:Envelope> ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1960,
+        360
+      ],
+      "id": "6213938c-0b32-4f31-82f9-beea260e8952",
+      "name": "fetchProducts SOAP Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ws.freepaid.co.za:443/airtimeplus/",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "{\n  \"Content-Type\": \"text/xml; charset=utf-8\",\n  \"SOAPAction\": \"https://ws.freepaid.co.za:443/airtimeplus/placeOrder\"\n}",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "text/xml",
+        "body": "=<?xml version=\"1.0\" encoding=\"utf-8\"?> <soapenv:Envelope    xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"   xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"   xmlns:air=\"https://ws.freepaid.co.za:443/airtimeplus/\">   \n<soapenv:Body>     \n<air:placeOrder>       \n<request xsi:type=\"air:placeOrderIn\">         \n<user xsi:type=\"xsd:string\">{{ $json.user }}</user>         \n<pass xsi:type=\"xsd:string\">{{ $json.pass }}</pass>       \n<refno xsi:type=\"xsd:string\">{{ $json.refno }}</refno>       \n<network xsi:type=\"xsd:string\">{{ $json.network }}</network>       \n<sellvalue xsi:type=\"xsd:string\">{{ $json.sellvalue }}</sellvalue>       \n<count xsi:type=\"xsd:string\">{{ $json.count}}</count>       \n<extra xsi:type=\"xsd:string\">{{ $json.extra }}</extra>       \n</request>     </air:placeOrder>   </soapenv:Body> </soapenv:Envelope> ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1960,
+        720
+      ],
+      "id": "5ad256e3-d000-4bc8-8a4e-be2c6a92b1c8",
+      "name": "placeOrder SOAP Request"
+    },
+    {
+      "parameters": {
+        "content": "## queryOrder - Pinless",
+        "height": 320,
+        "width": 780
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1680,
+        980
+      ],
+      "typeVersion": 1,
+      "id": "015e2425-a874-4783-9fef-b01ecc3972db",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "dataPropertyName": "=data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.xml",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        1080
+      ],
+      "id": "0f1a2225-5369-42c6-b1d9-24724613b6c1",
+      "name": "JSON Output3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "58785712-1808-4c7a-8530-561289519ce7",
+              "name": "user",
+              "value": "={{ $('placeOrder INPUTS1').item.json.user }}",
+              "type": "number"
+            },
+            {
+              "id": "3244b4d8-f3eb-4b6f-a58b-db64ae1200cc",
+              "name": "pass",
+              "value": "={{ $('placeOrder INPUTS1').item.json.pass }}",
+              "type": "string"
+            },
+            {
+              "id": "418288dc-ca4d-4833-a26b-65d9f2bc4a81",
+              "name": "orderno",
+              "value": "={{ $json['SOAP-ENV:Envelope']['SOAP-ENV:Body']['ns1:placeOrderResponse'].reply.orderno._ }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1740,
+        1080
+      ],
+      "id": "172f1519-6979-44d2-b1fe-c31cd44721ae",
+      "name": "queryOrder INPUTS"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ws.freepaid.co.za:443/airtimeplus/",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "{\n  \"Content-Type\": \"text/xml; charset=utf-8\",\n  \"SOAPAction\": \"https://ws.freepaid.co.za:443/airtimeplus/queryOrder\"\n}",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "text/xml",
+        "body": "=<?xml version=\"1.0\" encoding=\"utf-8\"?> <soapenv:Envelope    xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"   xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"   xmlns:air=\"https://ws.freepaid.co.za:443/airtimeplus/\">   \n<soapenv:Body>     \n<air:queryOrder>       \n<request xsi:type=\"air:queryOrderIn\">         \n<user xsi:type=\"xsd:string\">{{ $json.user }}</user>         \n<pass xsi:type=\"xsd:string\">{{ $json.pass }}</pass>       \n<orderno xsi:type=\"xsd:string\">{{ $json.orderno }}</orderno>           \n</request>     </air:queryOrder>   </soapenv:Body> </soapenv:Envelope> ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1960,
+        1080
+      ],
+      "id": "acefedc1-c613-4fb7-bc12-5a5fb5c011b4",
+      "name": "queryOrder SOAP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Freepaid Credentials",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Freepaid Credentials": {
+      "main": [
+        [
+          {
+            "node": "fetchBalance SOAP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "fetchProducts INPUTS",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "placeOrder INPUTS1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fetchBalance SOAP Request": {
+      "main": [
+        [
+          {
+            "node": "JSON Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JSON Output": {
+      "main": [
+        []
+      ]
+    },
+    "placeOrder INPUTS1": {
+      "main": [
+        [
+          {
+            "node": "placeOrder SOAP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fetchProducts INPUTS": {
+      "main": [
+        [
+          {
+            "node": "fetchProducts SOAP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fetchProducts SOAP Request": {
+      "main": [
+        [
+          {
+            "node": "JSON Output1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "placeOrder SOAP Request": {
+      "main": [
+        [
+          {
+            "node": "JSON Output2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "queryOrder INPUTS": {
+      "main": [
+        [
+          {
+            "node": "queryOrder SOAP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JSON Output2": {
+      "main": [
+        [
+          {
+            "node": "queryOrder INPUTS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "queryOrder SOAP Request": {
+      "main": [
+        [
+          {
+            "node": "JSON Output3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "07d517ee-7e12-4070-8365-fd8e2fb98c75",
+  "meta": {
+    "instanceId": "45a4e0841391ec3d97fa1cddf8df30e5317af515dbffb4f1bf4e1600d92add35"
+  },
+  "id": "qxfCUb4HildZirjb",
+  "tags": []
+}
