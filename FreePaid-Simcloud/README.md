@@ -1,5 +1,10 @@
 # 🌩️ n8n-nodes-simcloud
 
+![image](https://github.com/user-attachments/assets/84793696-6dd0-421f-9b6c-78a5587b8055) ![image](https://github.com/user-attachments/assets/55e5a308-05a9-4ec9-ad6a-ab29ff68cf18) ![image](https://github.com/user-attachments/assets/dd473050-ff5d-4670-b4e0-336e2bc5d3b5)
+
+
+
+
 This custom set of workflows for [n8n](https://n8n.io) provides integration with the [Freepaid | Simcloud SOAP-based API](https://simcloud.co.za/aff/5078972) used for airtime-related operations.
 
 ## 📦 Features
